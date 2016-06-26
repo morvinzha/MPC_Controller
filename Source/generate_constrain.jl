@@ -32,8 +32,8 @@ end
 #	jac_dyn(dynamics.jl)
 function next_state(y,u,start_time)
 #	current_state = RK45(dyn,[y;u],sample_time,start_time,RK45_hinit,RK45_Tol,RK45_ATol,jac_dyn,false) #
-	current_state = RK45(dyn_uav_f,[y;u],sample_time,start_time,RK45_hinit,RK45_Tol,RK45_ATol,jac_dyn_f,false)
-#	current_state = RK45(dyn_f,[y;u],sample_time,start_time,RK45_hinit,RK45_Tol,RK45_ATol,jac_dyn_f,false)
+#	current_state = RK45(dyn_uav_f,[y;u],sample_time,start_time,RK45_hinit,RK45_Tol,RK45_ATol,jac_dyn_f,false)
+	current_state = RK45(dyn_f,[y;u],sample_time,start_time,RK45_hinit,RK45_Tol,RK45_ATol,jac_dyn_f,false)
 	yn	  = current_state[1:dim_sample_x]
 	return yn
 end
@@ -50,11 +50,11 @@ end
 #	jac_dyn(dynamics.jl)
 function sample_jac_xu(y,u,start_time)
 #	jac = RK45(dyn,[y;u],sample_time,start_time,RK45_hinit,RK45_Tol,RK45_ATol,jac_dyn,true) #
-#	jac = RK45(dyn_f,[y;u],sample_time,start_time,RK45_hinit,RK45_Tol,RK45_ATol,jac_dyn_f,true)
-function G(x)
-	return RK45(dyn_uav_f,x,sample_time,start_time,RK45_hinit,RK45_Tol,RK45_ATol,jac_dyn,false)
-end
-	jac = NDforward(G,[y;u])
+	jac = RK45(dyn_f,[y;u],sample_time,start_time,RK45_hinit,RK45_Tol,RK45_ATol,jac_dyn_f,true)
+#function G(x)
+#	return RK45(dyn_uav_f,x,sample_time,start_time,RK45_hinit,RK45_Tol,RK45_ATol,jac_dyn,false)
+#end
+#	jac = NDforward(G,[y;u])
 	return jac
 end
 
